@@ -9,6 +9,6 @@ sealed class DataResult<out T: Any> {
 
     enum class ErrorType {
         // there could be more error types, but for now this is good enough
-        NOT_FOUND, NETWORK, UNKNOWN
+        NETWORK, UNKNOWN
     }
 }
