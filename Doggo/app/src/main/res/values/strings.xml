@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Doggo</string>
+    <string name="retry">Retry</string>
+    <string name="network_error">A network error occurred</string>
+    <string name="unknown_error">An unexpected error occurred</string>
+    <string name="error_breeds">Could not retrieve breeds :(</string>
 </resources>

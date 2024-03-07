@@ -1,9 +1,9 @@
 package com.doggo.ui
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import com.doggo.ui.screen.breeds.BreedsScreen
 
 @Composable
 fun MainNavigation() {
-    Text(text = "Nav")
+    BreedsScreen()
 }
