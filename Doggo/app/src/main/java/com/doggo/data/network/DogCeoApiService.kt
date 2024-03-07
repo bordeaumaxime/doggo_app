@@ -20,7 +20,10 @@ interface DogCeoApiService {
     suspend fun getAllBreeds(): Response<BreedsApiResponse>
 
     @GET("breed/{breed}/images/random/{count}")
-    suspend fun getRandomDogs(@Path("breed") breed: String, @Path("count") count: Int): Response<DogsApiResponse>
+    suspend fun getRandomDogs(
+        @Path("breed") breed: String,
+        @Path("count") count: Int
+    ): Response<DogsApiResponse>
 
     @GET("breed/{breed}/{sub_breed}/images/random/{count}")
     suspend fun getRandomDogs(

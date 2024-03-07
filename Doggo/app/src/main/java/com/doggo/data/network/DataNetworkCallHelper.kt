@@ -12,7 +12,7 @@ object DataNetworkCaller {
      * This way repository users don't have to catch exceptions or interpret
      * http codes.
      */
-    suspend fun <T: Any, R> call(
+    suspend fun <T : Any, R> call(
         transform: (R) -> T,
         networkCall: suspend () -> Response<R>
     ): DataResult<T> {
