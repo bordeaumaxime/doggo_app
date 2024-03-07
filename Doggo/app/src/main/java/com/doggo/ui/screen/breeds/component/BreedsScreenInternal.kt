@@ -12,6 +12,7 @@ import com.doggo.R
 import com.doggo.domain.model.Breed
 import com.doggo.domain.model.SubBreed
 import com.doggo.ui.screen.common.ScreenUiState
+import com.doggo.ui.screen.common.ScreenWithStates
 import com.doggo.ui.theme.DoggoTheme
 
 @Composable
@@ -22,20 +23,17 @@ fun BreedsScreenInternal(
     onRetry: () -> Unit,
     modifier: Modifier
 ) {
-    when (uiState) {
-        is ScreenUiState.Error -> ErrorView(
-            text = stringResource(R.string.error_breeds),
-            errorType = uiState.type,
-            onRetry = onRetry,
-            modifier = modifier
-        )
-
-        ScreenUiState.Loading -> LoadingView(modifier = modifier)
-        is ScreenUiState.Result -> BreedsResult(
-            breeds = uiState.data,
+    ScreenWithStates(
+        uiState = uiState,
+        errorText = stringResource(R.string.error_breeds),
+        onRetry = onRetry,
+        modifier = modifier
+    ) { data, resultModifier ->
+        BreedsResult(
+            breeds = data,
             onBreedClick = onBreedClick,
             onSubBreedClick = onSubBreedClick,
-            modifier = modifier
+            modifier = resultModifier
         )
     }
 }
