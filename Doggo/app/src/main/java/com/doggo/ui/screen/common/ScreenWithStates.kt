@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.doggo.ui.theme.DoggoTheme
 
 @Composable
-fun <T: Any> ScreenWithStates(
+fun <T : Any> ScreenWithStates(
     uiState: ScreenUiState<T>,
     errorText: String,
     onRetry: () -> Unit,

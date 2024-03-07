@@ -6,18 +6,20 @@ import com.doggo.domain.model.Breed
 import com.doggo.domain.repository.BreedRepository
 import com.doggo.domain.repository.DataResult
 import com.doggo.ui.screen.common.ScreenUiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class BreedsViewModel(private val breedRepository: BreedRepository,
-                      private val defaultDispatcher: CoroutineDispatcher
-): ViewModel() {
+@HiltViewModel
+class BreedsViewModel @Inject constructor(
+    private val breedRepository: BreedRepository,
+    private val defaultDispatcher: CoroutineDispatcher
+) : ViewModel() {
 
     private val _uiState: MutableStateFlow<ScreenUiState<List<Breed>>> =
         MutableStateFlow(
