@@ -1,4 +1,4 @@
-package com.doggo.ui.screen.breeds.component
+package com.doggo.ui.screen.common
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

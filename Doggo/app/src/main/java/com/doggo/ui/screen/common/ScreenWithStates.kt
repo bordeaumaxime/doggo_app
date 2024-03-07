@@ -10,10 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.doggo.domain.model.Breed
-import com.doggo.domain.model.SubBreed
-import com.doggo.ui.screen.breeds.component.ErrorView
-import com.doggo.ui.screen.breeds.component.LoadingView
 import com.doggo.ui.theme.DoggoTheme
 
 @Composable
