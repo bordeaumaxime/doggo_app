@@ -71,6 +71,7 @@ dependencies {
     // Misc
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
+    implementation(libs.coil.compose)
 
     // Tests
     testImplementation(libs.junit)
