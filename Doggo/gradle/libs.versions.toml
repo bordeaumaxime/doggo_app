@@ -2,6 +2,8 @@
 # Core
 agp = "8.3.0"
 kotlin = "1.9.22"
+ksp = "1.9.21-1.0.16"
+hilt = "2.50"
 coreKtx = "1.12.0"
 lifecycleRuntimeKtx = "2.7.0"
 
@@ -40,6 +42,8 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 
 # Misc
+hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt"}
+hiltCompiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt"}
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilVersion" }
@@ -58,4 +62,6 @@ assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertJ" }
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt"}
 

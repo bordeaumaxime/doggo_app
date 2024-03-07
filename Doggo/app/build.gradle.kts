@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -70,6 +72,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
 
     // Misc
+    implementation(libs.hilt)
+    ksp(libs.hiltCompiler)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.coil.compose)
