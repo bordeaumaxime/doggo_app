@@ -9,13 +9,17 @@ import com.doggo.ui.screen.breeds.component.BreedsScreenInternal
 import com.doggo.ui.screen.breeds.component.BreedsViewModel
 
 @Composable
-fun BreedsScreen(viewModel: BreedsViewModel) {
+fun BreedsScreen(
+    viewModel: BreedsViewModel,
+    onBreedClick: (String) -> Unit,
+    onSubBreedClick: (String, String) -> Unit,
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     BreedsScreenInternal(
         uiState = uiState,
-        onBreedClick = {},
-        onSubBreedClick = { _, _ -> },
-        onRetry = { viewModel.retry() },
+        onBreedClick = onBreedClick,
+        onSubBreedClick = onSubBreedClick,
+        onRetry = viewModel::retry,
         modifier = Modifier.fillMaxSize()
     )
 }
