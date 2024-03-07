@@ -4,4 +4,6 @@
     <string name="network_error">A network error occurred</string>
     <string name="unknown_error">An unexpected error occurred</string>
     <string name="error_breeds">Could not retrieve breeds :(</string>
+    <string name="dog_image_content_desc">Image of a dog</string>
+    <string name="error_dogs">Could not retrieve dogs :(</string>
 </resources>
