@@ -1,4 +1,4 @@
-package com.doggo.ui.screen.breeds.component
+package com.doggo.ui.screen.breeds
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

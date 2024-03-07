@@ -1,9 +1,10 @@
-package com.doggo.ui.screen.breeds.component
+package com.doggo.ui.screen.breeds
 
 import com.doggo.domain.model.Breed
 import com.doggo.domain.model.SubBreed
 import com.doggo.domain.repository.BreedRepository
 import com.doggo.domain.repository.DataResult
+import com.doggo.ui.screen.breeds.BreedsViewModel
 import com.doggo.ui.screen.common.ScreenUiState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
