@@ -1,10 +1,9 @@
-package com.doggo.ui.screen.breeds
+package com.doggo.ui.screen.dogs
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.doggo.domain.model.Breed
-import com.doggo.domain.repository.BreedRepository
-import com.doggo.domain.repository.DataResult
+import com.doggo.domain.model.Dog
+import com.doggo.domain.repository.DogRepository
 import com.doggo.ui.screen.common.ScreenUiState
 import com.doggo.ui.screen.common.toScreenUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,28 +16,34 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BreedsViewModel @Inject constructor(
-    private val breedRepository: BreedRepository,
+class DogsViewModel @Inject constructor(
+    private val dogRepository: DogRepository,
     private val defaultDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<ScreenUiState<List<Breed>>> =
+    companion object {
+        private const val DOGS_COUNT = 10
+    }
+
+    private val _uiState: MutableStateFlow<ScreenUiState<List<Dog>>> =
         MutableStateFlow(
             ScreenUiState.Loading
         )
-    val uiState: StateFlow<ScreenUiState<List<Breed>>> = _uiState
+    val uiState: StateFlow<ScreenUiState<List<Dog>>> = _uiState
 
-    private var retrieveBreedsJob: Job
+    private var retrieveDogsJob: Job
 
     init {
-        retrieveBreedsJob = launchRetrieveBreeds()
+        retrieveDogsJob = launchRetrieveDogs()
     }
 
-    private fun launchRetrieveBreeds(): Job {
+    private fun launchRetrieveDogs(): Job {
         return viewModelScope.launch(defaultDispatcher) {
-            val breedsResult = breedRepository.getAllBreeds()
+            // replace by real breed names
+            val dogsResult =
+                dogRepository.getRandomDogs("hound", "english", DOGS_COUNT)
             _uiState.update {
-                breedsResult.toScreenUiState()
+                dogsResult.toScreenUiState()
             }
         }
     }
@@ -47,7 +52,7 @@ class BreedsViewModel @Inject constructor(
         _uiState.update {
             ScreenUiState.Loading
         }
-        retrieveBreedsJob.cancel()
-        retrieveBreedsJob = launchRetrieveBreeds()
+        retrieveDogsJob.cancel()
+        retrieveDogsJob = launchRetrieveDogs()
     }
 }
