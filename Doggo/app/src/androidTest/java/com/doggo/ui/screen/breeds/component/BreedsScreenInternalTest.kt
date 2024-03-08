@@ -11,12 +11,17 @@ import com.doggo.ui.assertTextDisplayed
 import com.doggo.ui.clickText
 import com.doggo.ui.screen.common.LOADING_VIEW_TEST_TAG
 import com.doggo.ui.screen.common.ScreenUiState
+import com.doggo.ui.screen.dogs.component.DogsScreenInternal
 import com.doggo.ui.theme.DoggoTheme
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
+/**
+ * Tests that the [BreedsScreenInternal] displays the right views according to the state passed to it
+ * and calls the right callbacks when the user does actions.
+ */
 class BreedsScreenInternalTest {
 
     @get:Rule

@@ -16,7 +16,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.doggo.HiltAndroidTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -72,9 +72,13 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
 
-    // Misc
+    // Hilt
     implementation(libs.hilt)
     ksp(libs.hiltCompiler)
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hiltCompiler)
+
+    // Misc
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.coil.compose)

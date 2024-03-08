@@ -15,15 +15,20 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DataModule {
+object NetworkModule {
 
     @Provides
-    fun provideBreedRepository(dogCeoApiService: DogCeoApiService): BreedRepository {
-        return BreedRepositoryImpl(dogCeoApiService)
+    @Singleton
+    fun provideRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(DogCeoApiService.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
     }
 
     @Provides
-    fun provideDogRepository(dogCeoApiService: DogCeoApiService): DogRepository {
-        return DogRepositoryImpl(dogCeoApiService)
+    @Singleton
+    fun provideDogCeoApiService(retrofit: Retrofit): DogCeoApiService {
+        return retrofit.create(DogCeoApiService::class.java)
     }
 }

@@ -19,6 +19,10 @@ import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
+/**
+ * Tests that the [DogsScreenInternal] displays the right views according to the state passed to it
+ * and calls the right callbacks when the user does actions.
+ */
 class DogsScreenInternalTest {
 
     @get:Rule
