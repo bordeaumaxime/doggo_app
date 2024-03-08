@@ -10,6 +10,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.invokeGlobalAssertions
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onAllNodesWithContentDescription
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -25,9 +26,15 @@ fun ComposeTestRule.assertTextDisplayed(
 fun ComposeTestRule.clickText(
     text: String,
 ): SemanticsNodeInteraction {
-    return onNodeWithText(
-        text,
-    ).assertIsDisplayed().performClick()
+    return assertTextDisplayed(text).performClick()
+}
+
+fun ComposeTestRule.assertContentDescriptionDisplayed(
+    contentDescription: String,
+): SemanticsNodeInteraction {
+    return onNodeWithContentDescription(
+        contentDescription,
+    ).assertIsDisplayed()
 }
 
 fun ComposeTestRule.assertContentDescriptionDisplayed(
@@ -37,6 +44,12 @@ fun ComposeTestRule.assertContentDescriptionDisplayed(
     return onAllNodesWithContentDescription(
         contentDescription,
     ).assertCountEquals(count)
+}
+
+fun ComposeTestRule.clickContentDescription(
+    text: String,
+): SemanticsNodeInteraction {
+    return assertContentDescriptionDisplayed(text).performClick()
 }
 
 fun ComposeTestRule.assertTagDisplayed(

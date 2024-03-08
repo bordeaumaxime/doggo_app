@@ -94,6 +94,7 @@ class DoggoAppIntegrationTest {
     fun testBreedList() {
         // given app is launched
         // then we see the breed list items that are clickable
+        composeTestRule.assertTextDisplayed("Doggo breeds")
         listOf(
             "Appenzeller",
             "Bulldog",
@@ -111,6 +112,7 @@ class DoggoAppIntegrationTest {
         // when I click on a breed
         composeTestRule.onNodeWithText("Bulldog").performClick()
         // then I see a list of random dog pictures
+        composeTestRule.assertTextDisplayed("Doggo pics")
         composeTestRule.assertContentDescriptionDisplayed("Image of a dog", 3)
     }
 
@@ -120,6 +122,20 @@ class DoggoAppIntegrationTest {
         // when I click on a sub breed
         composeTestRule.onNodeWithText("French Bulldog").performClick()
         // then I see a list of random dog pictures
+        composeTestRule.assertTextDisplayed("Doggo pics")
         composeTestRule.assertContentDescriptionDisplayed("Image of a dog", 1)
+    }
+
+    @Test
+    fun testNavigateBack() {
+        // given app is launched
+        // when I click on a sub breed
+        composeTestRule.onNodeWithText("French Bulldog").performClick()
+        // then I see a list of random dog pictures
+        composeTestRule.assertTextDisplayed("Doggo pics")
+        // when I click "back"
+        composeTestRule.clickContentDescription("Go back")
+        // then I see the list of breeds again
+        composeTestRule.assertTextDisplayed("Doggo breeds")
     }
 }

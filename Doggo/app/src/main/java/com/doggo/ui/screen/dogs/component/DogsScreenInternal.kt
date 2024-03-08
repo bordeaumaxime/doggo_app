@@ -17,12 +17,15 @@ import com.doggo.ui.theme.DoggoTheme
 @Composable
 fun DogsScreenInternal(
     uiState: ScreenUiState<List<Dog>>,
+    onBack: () -> Unit,
     onRetry: () -> Unit,
     modifier: Modifier
 ) {
     ScreenWithStates(
+        title = stringResource(R.string.dogs_title),
         uiState = uiState,
         errorText = stringResource(R.string.error_dogs),
+        onBack = onBack,
         onRetry = onRetry,
         modifier = modifier
     ) { data, resultModifier ->
@@ -59,6 +62,7 @@ private fun DogsScreenInternalPreview(
         Surface {
             DogsScreenInternal(
                 uiState = uiState,
+                onBack = {},
                 onRetry = {},
                 modifier = Modifier.fillMaxSize()
             )

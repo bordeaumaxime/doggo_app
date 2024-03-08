@@ -35,6 +35,7 @@ class BreedsScreenInternalTest {
     fun testLoadingStateContent() {
         setContent(ScreenUiState.Loading)
 
+        composeTestRule.assertTextDisplayed("Doggo breeds")
         composeTestRule.assertTagDisplayed(LOADING_VIEW_TEST_TAG)
     }
 
@@ -56,6 +57,8 @@ class BreedsScreenInternalTest {
             )
         )
 
+        composeTestRule.assertTextDisplayed("Doggo breeds")
+
         composeTestRule.assertTextDisplayed("Appenzeller")
         composeTestRule.assertTextDisplayed("Bulldog")
         composeTestRule.assertTextDisplayed("Boston Bulldog")
@@ -73,6 +76,7 @@ class BreedsScreenInternalTest {
     fun testErrorStateContent() {
         setContent(ScreenUiState.Error(ScreenUiState.Error.Type.NETWORK))
 
+        composeTestRule.assertTextDisplayed("Doggo breeds")
         composeTestRule.assertTextDisplayed("Could not retrieve breeds :(")
         composeTestRule.assertTextDisplayed("A network error occurred")
         composeTestRule.assertTextDisplayed("Retry")

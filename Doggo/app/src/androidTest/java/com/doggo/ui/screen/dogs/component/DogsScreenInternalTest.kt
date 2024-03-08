@@ -10,6 +10,7 @@ import com.doggo.domain.model.Dog
 import com.doggo.ui.assertContentDescriptionDisplayed
 import com.doggo.ui.assertTagDisplayed
 import com.doggo.ui.assertTextDisplayed
+import com.doggo.ui.clickContentDescription
 import com.doggo.ui.clickText
 import com.doggo.ui.screen.common.LOADING_VIEW_TEST_TAG
 import com.doggo.ui.screen.common.ScreenUiState
@@ -28,13 +29,19 @@ class DogsScreenInternalTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    private val onBack: () -> Unit = mock()
     private val onRetry: () -> Unit = mock()
 
     @Test
     fun testLoadingStateContent() {
         setContent(ScreenUiState.Loading)
 
+        composeTestRule.assertContentDescriptionDisplayed("Go back")
+        composeTestRule.assertTextDisplayed("Doggo pics")
         composeTestRule.assertTagDisplayed(LOADING_VIEW_TEST_TAG)
+
+        composeTestRule.clickContentDescription("Go back")
+        verify(onBack).invoke()
     }
 
     @Test
@@ -48,21 +55,29 @@ class DogsScreenInternalTest {
                 )
             )
         )
-
-        println(composeTestRule.onRoot().printToString())
+        composeTestRule.assertContentDescriptionDisplayed("Go back")
+        composeTestRule.assertTextDisplayed("Doggo pics")
         composeTestRule.assertContentDescriptionDisplayed("Image of a dog", 3)
+
+        composeTestRule.clickContentDescription("Go back")
+        verify(onBack).invoke()
     }
 
     @Test
     fun testErrorStateContent() {
         setContent(ScreenUiState.Error(ScreenUiState.Error.Type.NETWORK))
 
+        composeTestRule.assertContentDescriptionDisplayed("Go back")
+        composeTestRule.assertTextDisplayed("Doggo pics")
         composeTestRule.assertTextDisplayed("Could not retrieve dogs :(")
         composeTestRule.assertTextDisplayed("A network error occurred")
         composeTestRule.assertTextDisplayed("Retry")
 
         composeTestRule.clickText("Retry")
         verify(onRetry).invoke()
+
+        composeTestRule.clickContentDescription("Go back")
+        verify(onBack).invoke()
     }
 
     private fun setContent(uiState: ScreenUiState<List<Dog>>) {
@@ -71,6 +86,7 @@ class DogsScreenInternalTest {
                 Surface {
                     DogsScreenInternal(
                         uiState = uiState,
+                        onBack = onBack,
                         onRetry = onRetry,
                         modifier = Modifier.fillMaxSize()
                     )

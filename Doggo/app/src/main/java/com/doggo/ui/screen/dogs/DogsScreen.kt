@@ -8,10 +8,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.doggo.ui.screen.dogs.component.DogsScreenInternal
 
 @Composable
-fun DogsScreen(viewModel: DogsViewModel) {
+fun DogsScreen(viewModel: DogsViewModel, onBack: () -> Unit) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     DogsScreenInternal(
         uiState = uiState,
+        onBack = onBack,
         onRetry = viewModel::retry,
         modifier = Modifier.fillMaxSize()
     )

@@ -6,4 +6,7 @@
     <string name="error_breeds">Could not retrieve breeds :(</string>
     <string name="dog_image_content_desc">Image of a dog</string>
     <string name="error_dogs">Could not retrieve dogs :(</string>
+    <string name="breeds_title">Doggo breeds</string>
+    <string name="dogs_title">Doggo pics</string>
+    <string name="go_back">Go back</string>
 </resources>

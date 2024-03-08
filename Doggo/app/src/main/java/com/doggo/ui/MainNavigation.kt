@@ -55,7 +55,7 @@ fun MainNavigation() {
                     type = NavType.StringType
                 })
         ) {
-            DogsScreen(hiltViewModel())
+            DogsScreen(hiltViewModel(), onBack = navController::navigateUp)
         }
     }
 

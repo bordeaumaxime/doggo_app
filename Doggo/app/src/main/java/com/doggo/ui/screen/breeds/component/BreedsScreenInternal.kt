@@ -24,6 +24,7 @@ fun BreedsScreenInternal(
     modifier: Modifier
 ) {
     ScreenWithStates(
+        title = stringResource(R.string.breeds_title),
         uiState = uiState,
         errorText = stringResource(R.string.error_breeds),
         onRetry = onRetry,
