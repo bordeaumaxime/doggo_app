@@ -14,12 +14,12 @@ sealed class ScreenUiState<out T : Any> {
     }
 }
 
-fun <T: Any> DataResult<T>.toScreenUiState() = when (this) {
+fun <T : Any> DataResult<T>.toScreenUiState() = when (this) {
     is DataResult.Error -> ScreenUiState.Error(this.toUiErrorType())
     is DataResult.Success -> ScreenUiState.Result(this.data)
 }
 
-fun DataResult.Error.toUiErrorType() = when(errorType) {
+fun DataResult.Error.toUiErrorType() = when (errorType) {
     DataResult.ErrorType.NETWORK -> ScreenUiState.Error.Type.NETWORK
     DataResult.ErrorType.UNKNOWN -> ScreenUiState.Error.Type.UNKNOWN
 }

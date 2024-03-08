@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.doggo.domain.model.Breed
 import com.doggo.domain.repository.BreedRepository
-import com.doggo.domain.repository.DataResult
 import com.doggo.ui.screen.common.ScreenUiState
 import com.doggo.ui.screen.common.toScreenUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
