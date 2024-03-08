@@ -26,6 +26,7 @@ espressoCore = "3.5.1"
 robolectric = "4.11.1"
 coroutinesTest = "1.7.3"
 mockitoKotlin = "5.2.1"
+mockitoAndroid = "5.8.0"
 assertJ = "3.24.2"
 
 [libraries]
@@ -62,6 +63,7 @@ mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutinesTest" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
+mockito-android = { module = "org.mockito:mockito-android", version.ref = "mockitoAndroid" }
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertJ" }
 
 [plugins]

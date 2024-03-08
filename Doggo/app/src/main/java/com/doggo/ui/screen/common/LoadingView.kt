@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.doggo.ui.theme.DoggoTheme
@@ -20,11 +21,15 @@ fun LoadingView(modifier: Modifier) {
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator(
-            modifier = Modifier.width(64.dp),
             color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier
+                .width(64.dp)
+                .testTag(LOADING_VIEW_TEST_TAG),
         )
     }
 }
+
+const val LOADING_VIEW_TEST_TAG = "LoadingView"
 
 @PreviewLightDark
 @Composable
