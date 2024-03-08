@@ -7,12 +7,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -35,12 +37,15 @@ fun BreedsResult(
             val breedName = breed.name.capitalize(Locale.current)
             Text(
                 text = breed.name.capitalize(Locale.current),
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+                    .clip(RoundedCornerShape(10.dp))
                     .clickable { onBreedClick(breed.name) }
+                    .background(MaterialTheme.colorScheme.onPrimary)
                     .padding(16.dp)
-                    .background(MaterialTheme.colorScheme.surface)
             )
-            HorizontalDivider()
             Column {
                 breed.subBreeds.forEach { subBreed ->
                     // we should not do that in a real app, API should return well formatted text in the right language
@@ -48,23 +53,25 @@ fun BreedsResult(
                     Text(
                         // we should not do that in a real app, API should return well formatted text in the right language
                         text = "$subBreedName $breedName",
+                        color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = 48.dp,
+                                end = 8.dp,
+                                top = 8.dp,
+                                bottom = 8.dp
+                            )
+                            .clip(RoundedCornerShape(10.dp))
                             .clickable {
                                 onSubBreedClick(
                                     breed.name,
                                     subBreed.name
                                 )
                             }
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.surfaceVariant)
-                            .padding(
-                                start = 48.dp,
-                                end = 16.dp,
-                                top = 16.dp,
-                                bottom = 16.dp
-                            )
+                            .background(MaterialTheme.colorScheme.primaryContainer)
+                            .padding(16.dp)
                     )
-                    HorizontalDivider()
                 }
             }
         }
