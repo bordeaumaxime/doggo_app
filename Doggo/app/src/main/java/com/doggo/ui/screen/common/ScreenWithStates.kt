@@ -1,5 +1,6 @@
 package com.doggo.ui.screen.common
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -56,28 +57,33 @@ fun <T : Any> ScreenWithStates(
             },
         )
     }, modifier = modifier) { paddingValues ->
-        when (uiState) {
-            is ScreenUiState.Error -> ErrorView(
-                text = errorText,
-                errorType = uiState.type,
-                onRetry = onRetry,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-            )
+        AnimatedContent(
+            targetState = uiState,
+            label = "ScreenWithStatesAnim"
+        ) { targetState ->
+            when (targetState) {
+                is ScreenUiState.Error -> ErrorView(
+                    text = errorText,
+                    errorType = targetState.type,
+                    onRetry = onRetry,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                )
 
-            ScreenUiState.Loading -> LoadingView(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-            )
+                ScreenUiState.Loading -> LoadingView(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                )
 
-            is ScreenUiState.Result -> resultContent(
-                uiState.data,
-                Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-            )
+                is ScreenUiState.Result -> resultContent(
+                    targetState.data,
+                    Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                )
+            }
         }
     }
 
