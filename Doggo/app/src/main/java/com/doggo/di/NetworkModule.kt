@@ -1,10 +1,6 @@
 package com.doggo.di
 
 import com.doggo.data.network.DogCeoApiService
-import com.doggo.data.repository.BreedRepositoryImpl
-import com.doggo.data.repository.DogRepositoryImpl
-import com.doggo.domain.repository.BreedRepository
-import com.doggo.domain.repository.DogRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
