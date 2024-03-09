@@ -1,22 +1,32 @@
 package com.doggo.ui.screen.breeds.component
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.VisibilityThreshold
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.capitalize
-import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import com.doggo.R
 import com.doggo.domain.model.Breed
 import com.doggo.domain.model.SubBreed
 import com.doggo.ui.theme.DoggoTheme
@@ -28,51 +38,69 @@ fun BreedListItem(
     onSubBreedClick: (String, String) -> Unit,
     modifier: Modifier
 ) {
+    val isPreview = LocalInspectionMode.current
     Column(modifier = modifier) {
-        // we should not do that in a real app, API should return well formatted text in the right language
-        val breedName = breed.name.capitalize(Locale.current)
-        Text(
-            text = breed.name.capitalize(Locale.current),
-            color = MaterialTheme.colorScheme.primary,
+        // expand by default inside the Preview
+        var isExpanded by rememberSaveable { mutableStateOf(isPreview) }
+        BreedListItemHeader(
+            breed = breed,
+            isExpanded = isExpanded,
+            onBreedClick = onBreedClick,
+            onExpand = { isExpanded = !isExpanded },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
-                .clip(RoundedCornerShape(10.dp))
-                .clickable { onBreedClick(breed.name) }
-                .background(MaterialTheme.colorScheme.onPrimary)
-                .padding(16.dp)
         )
-        Column {
-            breed.subBreeds.forEach { subBreed ->
-                // we should not do that in a real app, API should return well formatted text in the right language
-                val subBreedName = subBreed.name.capitalize(Locale.current)
-                Text(
-                    // we should not do that in a real app, API should return well formatted text in the right language
-                    text = "$subBreedName $breedName",
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            start = 48.dp,
-                            end = 8.dp,
-                            top = 8.dp,
-                            bottom = 8.dp
+        if (breed.subBreeds.isNotEmpty()) {
+            AnimatedVisibility(
+                isExpanded,
+                enter = expandAnimation(),
+                exit = shrinkAnimation(),
+            ) {
+                Column {
+                    Text(
+                        text = stringResource(R.string.sub_breeds),
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(start = 48.dp),
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                    breed.subBreeds.forEach { subBreed ->
+                        BreedListItemSubBreed(
+                            breed,
+                            subBreed,
+                            onSubBreedClick,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    start = 48.dp,
+                                    end = 8.dp,
+                                    top = 8.dp,
+                                    bottom = 8.dp
+                                )
                         )
-                        .clip(RoundedCornerShape(10.dp))
-                        .clickable {
-                            onSubBreedClick(
-                                breed.name,
-                                subBreed.name
-                            )
-                        }
-                        .background(MaterialTheme.colorScheme.primaryContainer)
-                        .padding(16.dp)
-                )
+                    }
+                }
             }
         }
     }
 
 }
+
+private fun shrinkAnimation() = fadeOut() + shrinkVertically(
+    animationSpec =
+    spring(
+        stiffness = Spring.StiffnessMedium,
+        visibilityThreshold = IntSize.VisibilityThreshold
+    )
+)
+
+private fun expandAnimation() = fadeIn() + expandVertically(
+    animationSpec =
+    spring(
+        stiffness = Spring.StiffnessMedium,
+        visibilityThreshold = IntSize.VisibilityThreshold
+    )
+)
 
 @PreviewLightDark
 @Composable
