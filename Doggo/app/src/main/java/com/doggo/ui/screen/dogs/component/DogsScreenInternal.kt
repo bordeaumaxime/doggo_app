@@ -6,8 +6,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.doggo.R
 import com.doggo.domain.model.Dog
 import com.doggo.ui.screen.common.ScreenUiState
@@ -51,7 +53,8 @@ private class StatePreviewParameterProvider :
     )
 }
 
-@Preview
+@PreviewLightDark
+@PreviewScreenSizes
 @Composable
 private fun DogsScreenInternalPreview(
     @PreviewParameter(
