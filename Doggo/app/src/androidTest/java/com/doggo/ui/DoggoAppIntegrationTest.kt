@@ -93,17 +93,34 @@ class DoggoAppIntegrationTest {
     @Test
     fun testBreedList() {
         // given app is launched
-        // then we see the breed list items that are clickable
+        // then we see the breed list items that are clickable, and sub breeds are not visible
         composeTestRule.assertTextDisplayed("Doggo breeds")
-        listOf(
-            "Appenzeller",
-            "Bulldog",
-            "Boston Bulldog",
-            "French Bulldog",
-            "Chihuahua"
-        ).forEach {
-            composeTestRule.assertTextDisplayed(it).assertHasClickAction()
-        }
+        composeTestRule.assertTextDisplayed("Appenzeller").assertHasClickAction()
+        composeTestRule.assertTextDisplayed("Bulldog").assertHasClickAction()
+        composeTestRule.assertTextDisplayed("Chihuahua").assertHasClickAction()
+
+        composeTestRule.assertTextDoesNotExist("Sub breeds")
+        composeTestRule.assertTextDoesNotExist("Boston Bulldog")
+        composeTestRule.assertTextDoesNotExist("English Bulldog")
+        composeTestRule.assertTextDoesNotExist("French Bulldog")
+
+        // when I click on a breed expand button
+        composeTestRule.clickContentDescription("Show bulldog sub breeds")
+
+        // Then I see the sub breeds
+        composeTestRule.assertTextDisplayed("Sub breeds")
+        composeTestRule.assertTextDisplayed("Boston Bulldog").assertHasClickAction()
+        composeTestRule.assertTextDisplayed("English Bulldog").assertHasClickAction()
+        composeTestRule.assertTextDisplayed("French Bulldog").assertHasClickAction()
+
+        // when I click on a breed hide button
+        composeTestRule.clickContentDescription("Hide bulldog sub breeds")
+
+        // Then I don't see the sub breeds anymore
+        composeTestRule.assertTextDoesNotExist("Sub breeds")
+        composeTestRule.assertTextDoesNotExist("Boston Bulldog")
+        composeTestRule.assertTextDoesNotExist("English Bulldog")
+        composeTestRule.assertTextDoesNotExist("French Bulldog")
     }
 
     @Test
@@ -120,7 +137,9 @@ class DoggoAppIntegrationTest {
     fun testNavigateToRandomDogsForSubBreed() {
         // given app is launched
         // when I click on a sub breed
+        composeTestRule.clickContentDescription("Show bulldog sub breeds")
         composeTestRule.onNodeWithText("French Bulldog").performClick()
+
         // then I see a list of random dog pictures
         composeTestRule.assertTextDisplayed("Doggo pics")
         composeTestRule.assertContentDescriptionDisplayed("Image of a dog", 1)
@@ -130,6 +149,7 @@ class DoggoAppIntegrationTest {
     fun testNavigateBack() {
         // given app is launched
         // when I click on a sub breed
+        composeTestRule.clickContentDescription("Show bulldog sub breeds")
         composeTestRule.onNodeWithText("French Bulldog").performClick()
         // then I see a list of random dog pictures
         composeTestRule.assertTextDisplayed("Doggo pics")

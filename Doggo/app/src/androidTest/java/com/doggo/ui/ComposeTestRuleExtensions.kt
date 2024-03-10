@@ -7,6 +7,7 @@ import androidx.compose.ui.test.assertAll
 import androidx.compose.ui.test.assertAny
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.invokeGlobalAssertions
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onAllNodesWithContentDescription
@@ -21,6 +22,14 @@ fun ComposeTestRule.assertTextDisplayed(
     return onNodeWithText(
         text,
     ).assertIsDisplayed()
+}
+
+fun ComposeTestRule.assertTextDoesNotExist(
+    text: String,
+) {
+    return onNodeWithText(
+        text,
+    ).assertDoesNotExist()
 }
 
 fun ComposeTestRule.clickText(

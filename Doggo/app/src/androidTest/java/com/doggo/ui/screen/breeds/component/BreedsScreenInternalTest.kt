@@ -3,15 +3,17 @@ package com.doggo.ui.screen.breeds.component
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.doggo.domain.model.Breed
 import com.doggo.domain.model.SubBreed
 import com.doggo.ui.assertTagDisplayed
 import com.doggo.ui.assertTextDisplayed
+import com.doggo.ui.assertTextDoesNotExist
+import com.doggo.ui.clickContentDescription
 import com.doggo.ui.clickText
 import com.doggo.ui.screen.common.LOADING_VIEW_TEST_TAG
 import com.doggo.ui.screen.common.ScreenUiState
-import com.doggo.ui.screen.dogs.component.DogsScreenInternal
 import com.doggo.ui.theme.DoggoTheme
 import org.junit.Rule
 import org.junit.Test
@@ -41,6 +43,7 @@ class BreedsScreenInternalTest {
 
     @Test
     fun testResultStateContent() {
+        // given a list of breeds and sub breeds
         setContent(
             ScreenUiState.Result(
                 listOf(
@@ -57,19 +60,43 @@ class BreedsScreenInternalTest {
             )
         )
 
+        // then the list of breeds is displayed, without sub breeds
         composeTestRule.assertTextDisplayed("Doggo breeds")
 
         composeTestRule.assertTextDisplayed("Appenzeller")
         composeTestRule.assertTextDisplayed("Bulldog")
-        composeTestRule.assertTextDisplayed("Boston Bulldog")
-        composeTestRule.assertTextDisplayed("French Bulldog")
         composeTestRule.assertTextDisplayed("Chihuahua")
 
+        composeTestRule.assertTextDoesNotExist("Sub breeds")
+        composeTestRule.assertTextDoesNotExist("Boston Bulldog")
+        composeTestRule.assertTextDoesNotExist("French Bulldog")
+
+        // when I click on a breed
         composeTestRule.clickText("Appenzeller")
+        // then the onBreedClick callback is invoked
         verify(onBreedClick).invoke("appenzeller")
 
+        // when I click on a breed expand button
+        composeTestRule.clickContentDescription("Show bulldog sub breeds")
+
+        // Then I see the sub breeds
+        composeTestRule.assertTextDisplayed("Sub breeds")
+        composeTestRule.assertTextDisplayed("Boston Bulldog").assertHasClickAction()
+        composeTestRule.assertTextDisplayed("French Bulldog").assertHasClickAction()
+
+        // when I click on a  sub breed
         composeTestRule.clickText("French Bulldog")
+        // then the onSubBreedClick callback is invoked
         verify(onSubBreedClick).invoke("bulldog", "french")
+
+        // when I click on a breed hide button
+        composeTestRule.clickContentDescription("Hide bulldog sub breeds")
+
+        // Then I don't see the sub breeds anymore
+        composeTestRule.assertTextDoesNotExist("Sub breeds")
+        composeTestRule.assertTextDoesNotExist("Boston Bulldog")
+        composeTestRule.assertTextDoesNotExist("English Bulldog")
+        composeTestRule.assertTextDoesNotExist("French Bulldog")
     }
 
     @Test
