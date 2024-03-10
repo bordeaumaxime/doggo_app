@@ -36,13 +36,6 @@ class DoggoAppIntegrationTest {
     @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
-    @BindValue
-    @JvmField
-    val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(DogCeoApiService.BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
     private val breedsResponse = Response.success(
         BreedsApiResponse(
             breeds = mapOf(
