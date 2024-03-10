@@ -18,20 +18,21 @@ import com.doggo.R
 import com.doggo.ui.theme.DoggoTheme
 
 @Composable
-fun ExpandIcon(isExpanded: Boolean, onClick: () -> Unit) {
+fun ExpandIcon(isExpanded: Boolean, breedName: String, onClick: () -> Unit) {
     val rotationDegrees: Float by animateFloatAsState(
-        if (isExpanded) 180f else 0f,
-        label = "ArrowAnimation"
+        if (isExpanded) 180f else 0f, label = "ArrowAnimation"
     )
     IconButton(onClick = onClick) {
-        Icon(
-            imageVector = Icons.Filled.KeyboardArrowDown,
-            contentDescription = stringResource(R.string.go_back),
+        Icon(imageVector = Icons.Filled.KeyboardArrowDown,
+            contentDescription = if (isExpanded) {
+                stringResource(R.string.hide_sub_breeds, breedName)
+            } else {
+                stringResource(R.string.show_sub_breeds, breedName)
+            },
             tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.graphicsLayer {
                 rotationZ = rotationDegrees
-            }
-        )
+            })
     }
 }
 
@@ -41,8 +42,8 @@ private fun BreedListItemPreview() {
     DoggoTheme {
         Surface {
             Column {
-                ExpandIcon(isExpanded = true, onClick = {})
-                ExpandIcon(isExpanded = false, onClick = {})
+                ExpandIcon(isExpanded = true, "bulldog", onClick = {})
+                ExpandIcon(isExpanded = false, "bulldog", onClick = {})
             }
         }
     }

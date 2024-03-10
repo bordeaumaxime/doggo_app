@@ -44,7 +44,7 @@ fun BreedListItemHeader(
                 .weight(1f)
         )
         if (breed.subBreeds.isNotEmpty()) {
-            ExpandIcon(isExpanded, onClick = onExpand)
+            ExpandIcon(isExpanded, breed.name, onClick = onExpand)
         }
     }
 }
