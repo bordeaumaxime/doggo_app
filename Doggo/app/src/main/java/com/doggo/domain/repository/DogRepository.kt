@@ -4,6 +4,9 @@ import com.doggo.domain.model.Dog
 
 interface DogRepository {
 
+    /**
+     * Get [count] pictures of dogs from the given breed and optional sub breed.
+     */
     suspend fun getRandomDogs(
         breedName: String,
         subBreedName: String?,

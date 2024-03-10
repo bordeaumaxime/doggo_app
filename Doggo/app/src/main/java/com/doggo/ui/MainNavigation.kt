@@ -25,7 +25,12 @@ private fun buildDogsScreenPath(
     "dogs_screen/$breedName?$SUB_BREED_PARAM=${subBreedName}"
 }
 
-
+/**
+ * Handles the navigation for [MainActivity].
+ * There are 2 screens:
+ * - [BreedsScreen]
+ * - [DogsScreen]
+ */
 @Composable
 fun MainNavigation() {
     val navController = rememberNavController()

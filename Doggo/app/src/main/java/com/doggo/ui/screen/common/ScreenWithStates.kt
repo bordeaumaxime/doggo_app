@@ -25,6 +25,14 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.doggo.R
 import com.doggo.ui.theme.DoggoTheme
 
+/**
+ * A base screen that multiple states that represent the data we are loading.
+ *
+ * The states are and their corresponding views:
+ * - [ScreenUiState.Loading] -> [LoadingView]
+ * - [ScreenUiState.Error] -> [ErrorView] with the given [errorText]
+ * - [ScreenUiState.Result] -> the given [resultContent]
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T : Any> ScreenWithStates(

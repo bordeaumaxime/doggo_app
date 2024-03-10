@@ -11,6 +11,9 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 
+/**
+ *  Creates a navigation composable with predefined animations.
+ */
 fun NavGraphBuilder.baseDestination(
     route: String,
     arguments: List<NamedNavArgument> = emptyList(),

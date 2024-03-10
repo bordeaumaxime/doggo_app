@@ -7,6 +7,12 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.doggo.ui.screen.breeds.component.BreedsScreenInternal
 
+/**
+ * Screen that displays the list of all dog breeds.
+ * Breeds can be expanded to display the sub breeds.
+ *
+ * Breeds and sub breeds are both clickable.
+ */
 @Composable
 fun BreedsScreen(
     viewModel: BreedsViewModel,
