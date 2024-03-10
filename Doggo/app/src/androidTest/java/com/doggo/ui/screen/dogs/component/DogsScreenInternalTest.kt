@@ -8,6 +8,7 @@ import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.printToString
 import com.doggo.domain.model.Dog
 import com.doggo.ui.assertContentDescriptionDisplayed
+import com.doggo.ui.assertItemsDisplayedInList
 import com.doggo.ui.assertTagDisplayed
 import com.doggo.ui.assertTextDisplayed
 import com.doggo.ui.clickContentDescription
@@ -57,7 +58,13 @@ class DogsScreenInternalTest {
         )
         composeTestRule.assertContentDescriptionDisplayed("Go back")
         composeTestRule.assertTextDisplayed("Doggo pics")
-        composeTestRule.assertContentDescriptionDisplayed("Image of a dog", 3)
+        composeTestRule.assertItemsDisplayedInList(
+            DOGS_LIST_TEST_TAG, listOf(
+                "https://images.dog.ceo/breeds/hound-english/n02089973_1.jpg",
+                "https://images.dog.ceo/breeds/hound-english/n02089973_1066.jpg",
+                "https://images.dog.ceo/breeds/hound-english/n02089973_1748.jpg",
+            )
+        )
 
         composeTestRule.clickContentDescription("Go back")
         verify(onBack).invoke()

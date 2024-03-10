@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.doggo.domain.model.Dog
@@ -27,18 +28,21 @@ fun DogsResult(
         verticalItemSpacing = 4.dp,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         content = {
-            this.items(dogs) { dog ->
+            items(dogs) { dog ->
                 DogImage(
                     dog, Modifier
                         .animateItemPlacement()
                         .fillMaxWidth()
                         .wrapContentHeight()
+                        .testTag(dog.imageUrl)
                 )
             }
         },
-        modifier = modifier
+        modifier = modifier.testTag(DOGS_LIST_TEST_TAG)
     )
 }
+
+const val DOGS_LIST_TEST_TAG = "DogsList"
 
 @PreviewLightDark
 @Composable

@@ -8,6 +8,7 @@ import com.doggo.data.network.DogCeoApiService
 import com.doggo.data.network.model.BreedsApiResponse
 import com.doggo.data.network.model.DogsApiResponse
 import com.doggo.di.NetworkModule
+import com.doggo.ui.screen.dogs.component.DOGS_LIST_TEST_TAG
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -17,8 +18,6 @@ import org.junit.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * Tests that the user can display the list of breeds, then when they click
@@ -88,7 +87,8 @@ class DoggoAppIntegrationTest {
         // given app is launched
         // then we see the breed list items that are clickable, and sub breeds are not visible
         composeTestRule.assertTextDisplayed("Doggo breeds")
-        composeTestRule.assertTextDisplayed("Appenzeller").assertHasClickAction()
+        composeTestRule.assertTextDisplayed("Appenzeller")
+            .assertHasClickAction()
         composeTestRule.assertTextDisplayed("Bulldog").assertHasClickAction()
         composeTestRule.assertTextDisplayed("Chihuahua").assertHasClickAction()
 
@@ -102,9 +102,12 @@ class DoggoAppIntegrationTest {
 
         // Then I see the sub breeds
         composeTestRule.assertTextDisplayed("Sub breeds")
-        composeTestRule.assertTextDisplayed("Boston Bulldog").assertHasClickAction()
-        composeTestRule.assertTextDisplayed("English Bulldog").assertHasClickAction()
-        composeTestRule.assertTextDisplayed("French Bulldog").assertHasClickAction()
+        composeTestRule.assertTextDisplayed("Boston Bulldog")
+            .assertHasClickAction()
+        composeTestRule.assertTextDisplayed("English Bulldog")
+            .assertHasClickAction()
+        composeTestRule.assertTextDisplayed("French Bulldog")
+            .assertHasClickAction()
 
         // when I click on a breed hide button
         composeTestRule.clickContentDescription("Hide bulldog sub breeds")
@@ -123,7 +126,13 @@ class DoggoAppIntegrationTest {
         composeTestRule.onNodeWithText("Bulldog").performClick()
         // then I see a list of random dog pictures
         composeTestRule.assertTextDisplayed("Doggo pics")
-        composeTestRule.assertContentDescriptionDisplayed("Image of a dog", 3)
+        composeTestRule.assertItemsDisplayedInList(
+            DOGS_LIST_TEST_TAG, listOf(
+                "https://images.dog.ceo/breeds/hound-english/n02089973_1.jpg",
+                "https://images.dog.ceo/breeds/hound-english/n02089973_1066.jpg",
+                "https://images.dog.ceo/breeds/hound-english/n02089973_1748.jpg",
+            )
+        )
     }
 
     @Test
@@ -135,7 +144,11 @@ class DoggoAppIntegrationTest {
 
         // then I see a list of random dog pictures
         composeTestRule.assertTextDisplayed("Doggo pics")
-        composeTestRule.assertContentDescriptionDisplayed("Image of a dog", 1)
+        composeTestRule.assertItemsDisplayedInList(
+            DOGS_LIST_TEST_TAG, listOf(
+                "https://images.dog.ceo/breeds/hound-english/n02089973_1.jpg"
+            )
+        )
     }
 
     @Test
