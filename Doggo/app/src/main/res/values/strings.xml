@@ -7,7 +7,7 @@
     <string name="dog_image_content_desc">Image of a dog</string>
     <string name="error_dogs">Could not retrieve dogs :(</string>
     <string name="breeds_title">Doggo breeds</string>
-    <string name="dogs_title">Doggo pics</string>
+    <string name="dogs_title">%1$s pics</string>
     <string name="go_back">Go back</string>
     <string name="sub_breeds">Sub breeds</string>
     <string name="hide_sub_breeds">Hide %1$s sub breeds</string>

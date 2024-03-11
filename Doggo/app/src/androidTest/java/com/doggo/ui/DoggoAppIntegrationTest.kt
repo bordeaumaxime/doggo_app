@@ -125,7 +125,7 @@ class DoggoAppIntegrationTest {
         // when I click on a breed
         composeTestRule.onNodeWithText("Bulldog").performClick()
         // then I see a list of random dog pictures
-        composeTestRule.assertTextDisplayed("Doggo pics")
+        composeTestRule.assertTextDisplayed("Bulldog pics")
         composeTestRule.assertItemsDisplayedInList(
             DOGS_LIST_TEST_TAG, listOf(
                 "https://images.dog.ceo/breeds/hound-english/n02089973_1.jpg",
@@ -143,7 +143,7 @@ class DoggoAppIntegrationTest {
         composeTestRule.onNodeWithText("French Bulldog").performClick()
 
         // then I see a list of random dog pictures
-        composeTestRule.assertTextDisplayed("Doggo pics")
+        composeTestRule.assertTextDisplayed("French Bulldog pics")
         composeTestRule.assertItemsDisplayedInList(
             DOGS_LIST_TEST_TAG, listOf(
                 "https://images.dog.ceo/breeds/hound-english/n02089973_1.jpg"
@@ -158,7 +158,7 @@ class DoggoAppIntegrationTest {
         composeTestRule.clickContentDescription("Show bulldog sub breeds")
         composeTestRule.onNodeWithText("French Bulldog").performClick()
         // then I see a list of random dog pictures
-        composeTestRule.assertTextDisplayed("Doggo pics")
+        composeTestRule.assertTextDisplayed("French Bulldog pics")
         // when I click "back"
         composeTestRule.clickContentDescription("Go back")
         // then I see the list of breeds again

@@ -49,7 +49,11 @@ class DogsViewModelTest {
             advanceUntilIdle()
 
             Assertions.assertThat(viewModel.uiState.value).isEqualTo(
-                ScreenUiState.Result(stubDogs)
+                DogsUiState(
+                    breedName = "hound",
+                    subBreedName = "english",
+                    ScreenUiState.Result(stubDogs)
+                )
             )
         }
 
@@ -69,7 +73,11 @@ class DogsViewModelTest {
             advanceUntilIdle()
 
             Assertions.assertThat(viewModel.uiState.value).isEqualTo(
-                ScreenUiState.Error(ScreenUiState.Error.Type.UNKNOWN)
+                DogsUiState(
+                    breedName = "hound",
+                    subBreedName = "english",
+                    ScreenUiState.Error(ScreenUiState.Error.Type.UNKNOWN)
+                )
             )
         }
 
@@ -89,7 +97,11 @@ class DogsViewModelTest {
             advanceUntilIdle()
 
             Assertions.assertThat(viewModel.uiState.value).isEqualTo(
-                ScreenUiState.Error(ScreenUiState.Error.Type.NETWORK)
+                DogsUiState(
+                    breedName = "hound",
+                    subBreedName = "english",
+                    ScreenUiState.Error(ScreenUiState.Error.Type.NETWORK)
+                )
             )
         }
 
@@ -108,7 +120,7 @@ class DogsViewModelTest {
             val viewModel = createViewModel()
             advanceUntilIdle()
 
-            val uiStates = mutableListOf<ScreenUiState<List<Dog>>>()
+            val uiStates = mutableListOf<DogsUiState>()
             backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
                 viewModel.uiState.toList(uiStates)
             }
@@ -125,9 +137,21 @@ class DogsViewModelTest {
             advanceUntilIdle()
 
             Assertions.assertThat(uiStates).containsExactly(
-                ScreenUiState.Error(ScreenUiState.Error.Type.NETWORK),
-                ScreenUiState.Loading,
-                ScreenUiState.Result(stubDogs)
+                DogsUiState(
+                    breedName = "hound",
+                    subBreedName = "english",
+                    ScreenUiState.Error(ScreenUiState.Error.Type.NETWORK)
+                ),
+                DogsUiState(
+                    breedName = "hound",
+                    subBreedName = "english",
+                    ScreenUiState.Loading
+                ),
+                DogsUiState(
+                    breedName = "hound",
+                    subBreedName = "english",
+                    ScreenUiState.Result(stubDogs)
+                )
             )
         }
 

@@ -13,12 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.capitalize
-import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.doggo.domain.model.Breed
 import com.doggo.domain.model.SubBreed
+import com.doggo.ui.screen.common.BreedNameFormatter
 import com.doggo.ui.theme.DoggoTheme
 
 @Composable
@@ -29,8 +28,8 @@ fun BreedListItemHeader(
     onExpand: () -> Unit,
     modifier: Modifier
 ) {
-    // we should not do that in a real app, API should return well formatted text in the right language
-    val formattedBreedName = breed.name.capitalize(Locale.current)
+    val formattedBreedName =
+        BreedNameFormatter.getBreedOrSubBreedFormattedName(breed.name, null)
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier
         .clip(RoundedCornerShape(10.dp))
         .clickable { onBreedClick(breed.name) }

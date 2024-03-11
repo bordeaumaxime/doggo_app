@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onRoot
-import androidx.compose.ui.test.printToString
 import com.doggo.domain.model.Dog
 import com.doggo.ui.assertContentDescriptionDisplayed
 import com.doggo.ui.assertItemsDisplayedInList
@@ -15,6 +13,7 @@ import com.doggo.ui.clickContentDescription
 import com.doggo.ui.clickText
 import com.doggo.ui.screen.common.LOADING_VIEW_TEST_TAG
 import com.doggo.ui.screen.common.ScreenUiState
+import com.doggo.ui.screen.dogs.DogsUiState
 import com.doggo.ui.theme.DoggoTheme
 import org.junit.Rule
 import org.junit.Test
@@ -35,10 +34,15 @@ class DogsScreenInternalTest {
 
     @Test
     fun testLoadingStateContent() {
-        setContent(ScreenUiState.Loading)
+        setContent(
+            DogsUiState(
+                breedName = "hound",
+                subBreedName = "english", ScreenUiState.Loading
+            )
+        )
 
         composeTestRule.assertContentDescriptionDisplayed("Go back")
-        composeTestRule.assertTextDisplayed("Doggo pics")
+        composeTestRule.assertTextDisplayed("English Hound pics")
         composeTestRule.assertTagDisplayed(LOADING_VIEW_TEST_TAG)
 
         composeTestRule.clickContentDescription("Go back")
@@ -48,16 +52,19 @@ class DogsScreenInternalTest {
     @Test
     fun testResultStateContent() {
         setContent(
-            ScreenUiState.Result(
-                listOf(
-                    Dog("https://images.dog.ceo/breeds/hound-english/n02089973_1.jpg"),
-                    Dog("https://images.dog.ceo/breeds/hound-english/n02089973_1066.jpg"),
-                    Dog("https://images.dog.ceo/breeds/hound-english/n02089973_1748.jpg"),
+            DogsUiState(
+                breedName = "hound",
+                subBreedName = "english", ScreenUiState.Result(
+                    listOf(
+                        Dog("https://images.dog.ceo/breeds/hound-english/n02089973_1.jpg"),
+                        Dog("https://images.dog.ceo/breeds/hound-english/n02089973_1066.jpg"),
+                        Dog("https://images.dog.ceo/breeds/hound-english/n02089973_1748.jpg"),
+                    )
                 )
             )
         )
         composeTestRule.assertContentDescriptionDisplayed("Go back")
-        composeTestRule.assertTextDisplayed("Doggo pics")
+        composeTestRule.assertTextDisplayed("English Hound pics")
         composeTestRule.assertItemsDisplayedInList(
             DOGS_LIST_TEST_TAG, listOf(
                 "https://images.dog.ceo/breeds/hound-english/n02089973_1.jpg",
@@ -72,10 +79,16 @@ class DogsScreenInternalTest {
 
     @Test
     fun testErrorStateContent() {
-        setContent(ScreenUiState.Error(ScreenUiState.Error.Type.NETWORK))
+        setContent(
+            DogsUiState(
+                breedName = "hound",
+                subBreedName = "english",
+                ScreenUiState.Error(ScreenUiState.Error.Type.NETWORK)
+            )
+        )
 
         composeTestRule.assertContentDescriptionDisplayed("Go back")
-        composeTestRule.assertTextDisplayed("Doggo pics")
+        composeTestRule.assertTextDisplayed("English Hound pics")
         composeTestRule.assertTextDisplayed("Could not retrieve dogs :(")
         composeTestRule.assertTextDisplayed("A network error occurred")
         composeTestRule.assertTextDisplayed("Retry")
@@ -87,7 +100,7 @@ class DogsScreenInternalTest {
         verify(onBack).invoke()
     }
 
-    private fun setContent(uiState: ScreenUiState<List<Dog>>) {
+    private fun setContent(uiState: DogsUiState) {
         composeTestRule.setContent {
             DoggoTheme {
                 Surface {

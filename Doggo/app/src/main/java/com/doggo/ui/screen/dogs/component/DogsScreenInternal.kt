@@ -11,20 +11,24 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.doggo.R
 import com.doggo.domain.model.Dog
+import com.doggo.ui.screen.common.BreedNameFormatter.getBreedOrSubBreedFormattedName
 import com.doggo.ui.screen.common.ScreenUiState
 import com.doggo.ui.screen.common.ScreenWithStates
+import com.doggo.ui.screen.dogs.DogsUiState
 import com.doggo.ui.theme.DoggoTheme
 
 @Composable
 fun DogsScreenInternal(
-    uiState: ScreenUiState<List<Dog>>,
+    uiState: DogsUiState,
     onBack: () -> Unit,
     onRetry: () -> Unit,
     modifier: Modifier
 ) {
+    val breedOrSubBreed =
+        getBreedOrSubBreedFormattedName(uiState.breedName, uiState.subBreedName)
     ScreenWithStates(
-        title = stringResource(R.string.dogs_title),
-        uiState = uiState,
+        title = stringResource(R.string.dogs_title, breedOrSubBreed),
+        uiState = uiState.screenUiState,
         errorText = stringResource(R.string.error_dogs),
         onBack = onBack,
         onRetry = onRetry,
@@ -38,17 +42,32 @@ fun DogsScreenInternal(
 }
 
 private class StatePreviewParameterProvider :
-    PreviewParameterProvider<ScreenUiState<List<Dog>>> {
+    PreviewParameterProvider<DogsUiState> {
     override val values = sequenceOf(
-        ScreenUiState.Loading,
-        ScreenUiState.Result(
-            listOf(
-                Dog("https://images.dog.ceo/breeds/hound-english/n02089973_1.jpg"),
-                Dog("https://images.dog.ceo/breeds/hound-english/n02089973_1066.jpg"),
-                Dog("https://images.dog.ceo/breeds/hound-english/n02089973_1748.jpg"),
+        DogsUiState(
+            breedName = "hound",
+            subBreedName = null,
+            ScreenUiState.Loading
+        ),
+        DogsUiState(
+            breedName = "hound",
+            subBreedName = "english",
+            ScreenUiState.Loading
+        ),
+        DogsUiState(
+            breedName = "hound", subBreedName = null, ScreenUiState.Result(
+                listOf(
+                    Dog("https://images.dog.ceo/breeds/hound-english/n02089973_1.jpg"),
+                    Dog("https://images.dog.ceo/breeds/hound-english/n02089973_1066.jpg"),
+                    Dog("https://images.dog.ceo/breeds/hound-english/n02089973_1748.jpg"),
+                )
             )
         ),
-        ScreenUiState.Error(type = ScreenUiState.Error.Type.NETWORK)
+        DogsUiState(
+            breedName = "hound",
+            subBreedName = null,
+            ScreenUiState.Error(type = ScreenUiState.Error.Type.NETWORK)
+        )
     )
 }
 
@@ -58,7 +77,7 @@ private class StatePreviewParameterProvider :
 private fun DogsScreenInternalPreview(
     @PreviewParameter(
         StatePreviewParameterProvider::class
-    ) uiState: ScreenUiState<List<Dog>>
+    ) uiState: DogsUiState
 ) {
     DoggoTheme {
         Surface {

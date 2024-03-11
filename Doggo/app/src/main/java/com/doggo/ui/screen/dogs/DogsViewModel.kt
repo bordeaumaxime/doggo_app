@@ -32,11 +32,11 @@ class DogsViewModel @Inject constructor(
     private val breedName: String = checkNotNull(savedStateHandle[BREED_PARAM])
     private val subBreedName: String? = savedStateHandle[SUB_BREED_PARAM]
 
-    private val _uiState: MutableStateFlow<ScreenUiState<List<Dog>>> =
+    private val _uiState: MutableStateFlow<DogsUiState> =
         MutableStateFlow(
-            ScreenUiState.Loading
+            DogsUiState(breedName = breedName, subBreedName = subBreedName, ScreenUiState.Loading)
         )
-    val uiState: StateFlow<ScreenUiState<List<Dog>>> = _uiState
+    val uiState: StateFlow<DogsUiState> = _uiState
 
     private var retrieveDogsJob: Job
 
@@ -51,14 +51,14 @@ class DogsViewModel @Inject constructor(
             val dogsResult =
                 dogRepository.getRandomDogs(breedName, subBreedName, DOGS_COUNT)
             _uiState.update {
-                dogsResult.toScreenUiState()
+                it.copy(screenUiState = dogsResult.toScreenUiState())
             }
         }
     }
 
     fun retry() {
         _uiState.update {
-            ScreenUiState.Loading
+            it.copy(screenUiState = ScreenUiState.Loading)
         }
         retrieveDogsJob.cancel()
         retrieveDogsJob = launchRetrieveDogs()
